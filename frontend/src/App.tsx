@@ -55,11 +55,11 @@ export const App = (props: Props): ReactElement => {
   return (
     <div className="container">
       <div className="row mtl">
-        <div className="col-sm-5">
-          <h1 className="text-xl mbs">who's the best dog?</h1>
+        <div className="col-sm-5 fdr fac">
+          <h1 className="pvs text-xl">who's the best dog?</h1>
         </div>
         <div className="col-sm-7">
-          <div className="phd pvxs bg-lightblue">
+          <div className="phm pvxs bg-lightblue">
             <p>
               <strong>Note:</strong> they're all good dogs
             </p>
