@@ -7,6 +7,8 @@ This is a full-stack JavaScript app for a voting bracket on
 
 ### npm Dependencies
 
+You'll need npm and node installed.
+
 For npm dependencies, this will install all for the frontend and backend folders:
 ```shell script
 ./scripts/install-all.sh
@@ -14,7 +16,9 @@ For npm dependencies, this will install all for the frontend and backend folders
 
 ### postgres
 
-If not already installed, install [postgres](https://www.postgresql.org/)
+If not already installed, install postgres.
+Make sure you have `psql` installed as well, and that postgres is running on port 5432.
+Your postgres user should have no password.
 
 Create postgres local DB:
 ```shell script
