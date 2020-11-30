@@ -32,8 +32,8 @@ h5 {
 
 .text-m {
   font-style: normal;
-  font-weight: 400;
-  font-size: 1.15rem;
+  font-weight: normal;
+  font-size: 1rem;
   line-height: 1.2;
 }
 
@@ -61,5 +61,10 @@ h5 {
   .text-xl {
     font-weight: 500;
     font-size: 2rem;
+  }
+
+  .text-m {
+    font-weight: 400;
+    font-size: 1.15rem;
   }
 }

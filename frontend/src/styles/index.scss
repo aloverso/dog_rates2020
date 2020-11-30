@@ -4,7 +4,6 @@
 @import "flex";
 @import "typography";
 @import "colors";
-@import "loader";
 @import "css/bootstrap.css";
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
@@ -21,24 +20,6 @@
   box-sizing: border-box;
 }
 
-button {
-  font-family: "Roboto", sans-serif;
-  background-color: unset;
-  border: 1px solid $twitterblue;
-  cursor: pointer;
-  border-radius: 999px;
-  color: $twitterblue;
-  font-weight: 700;
-  padding: 5px;
-  width: 100%;
-  text-align: center;
-  font-size: 1.15rem;
-
-  &:hover {
-    background-color: $lightblue;
-  }
-}
-
 body {
   line-height: 1.5rem;
   margin: 0;
@@ -50,28 +31,22 @@ body {
   color: $dark;
 }
 
-.width-100 {
-  width: 100%;
-}
-
-.height-100 {
-  height: 100%;
-}
-
-.height-full {
-  min-height: 100vh;
-}
-
-.align-right {
-  text-align: right;
-}
-
-.align-center {
-  text-align: center;
-}
-
-.pointer {
+button {
+  font-family: "Roboto", sans-serif;
+  background-color: unset;
+  border: 1px solid $twitterblue;
   cursor: pointer;
+  border-radius: 999px;
+  color: $twitterblue;
+  font-weight: 700;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: $lightblue;
+  }
 }
 
 a.no-link-format {
@@ -112,5 +87,11 @@ a {
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+@media (min-width: $sm) {
+  button {
+    font-size: 1.15rem;
   }
 }
