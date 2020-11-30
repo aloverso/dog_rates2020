@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { StubTokenRepo } from "../test-objects/StubTokenRepo";
 import { TokenService } from "../types";
 import { TokenServiceFactory } from "./TokenService";
+
 jest.mock("bcryptjs");
 
 const mockNow = "2020-11-20T16:57:25.000Z";
@@ -23,7 +24,7 @@ describe("TokenService", () => {
   });
 
   describe("generate", () => {
-    it("creates a token by hashing the ids and adding salt len and epoch millis", async () => {
+    it("creates and saves a token by hashing the ids and adding epoch millis", async () => {
       mockedBcrypt.genSalt.mockImplementation(() => Promise.resolve("salt"));
       mockedBcrypt.hash.mockImplementation((s, salt) => {
         expect(salt).toEqual("salt");
@@ -32,23 +33,18 @@ describe("TokenService", () => {
       });
 
       const token = await tokenService.generate("123", "456");
-      expect(token).toEqual("salthashed123456+4+1605891445000");
-    });
-
-    it("saves the generated token", async () => {
-      mockedBcrypt.genSalt.mockImplementation(() => Promise.resolve("salt"));
-      mockedBcrypt.hash.mockImplementation(() => {
-        return Promise.resolve("salthashed123456");
-      });
-
-      await tokenService.generate("123", "456");
-      expect(stubTokenRepo.save).toHaveBeenCalledWith(`salthashed123456+${"salt".length}+${mockNowMillis}`);
+      expect(token).toEqual(`salthashed123456+${mockNowMillis}`);
+      expect(stubTokenRepo.save).toHaveBeenCalledWith(`salthashed123456+${mockNowMillis}`);
     });
   });
 
   describe("validate", () => {
     it("returns false when the token does not exist in the repo", async () => {
       stubTokenRepo.tokenExists.mockResolvedValue(false);
+      mockedBcrypt.compare.mockImplementation(() => {
+        return Promise.resolve(true);
+      });
+
       const isValid = await tokenService.validate("nonexistent-token", "123", "456");
       expect(isValid).toBe(false);
       expect(stubTokenRepo.tokenExists).toHaveBeenCalledWith("nonexistent-token");
@@ -57,38 +53,38 @@ describe("TokenService", () => {
     it("returns false when token exists in repo but does not match the ids passed", async () => {
       stubTokenRepo.tokenExists.mockResolvedValue(true);
 
-      mockedBcrypt.hash.mockImplementation((s, salt) => {
-        expect(salt).toEqual("salt");
+      mockedBcrypt.compare.mockImplementation((s, hash) => {
         expect(s).toEqual("123456");
-        return Promise.resolve("salthashed123456");
+        expect(hash).toEqual("salthashed999999");
+        return Promise.resolve(false);
       });
 
-      const isValid = await tokenService.validate("salthashed999999+4+somedate", "123", "456");
+      const isValid = await tokenService.validate("salthashed999999+somedate", "123", "456");
       expect(isValid).toBe(false);
     });
 
     it("returns true when token exists in repo and matches the ids passed", async () => {
       stubTokenRepo.tokenExists.mockResolvedValue(true);
 
-      mockedBcrypt.hash.mockImplementation((s, salt) => {
-        expect(salt).toEqual("salt");
+      mockedBcrypt.compare.mockImplementation((s, hash) => {
         expect(s).toEqual("123456");
-        return Promise.resolve("salthashed123456");
+        expect(hash).toEqual("salthashed123456");
+        return Promise.resolve(true);
       });
 
-      const isValid = await tokenService.validate("salthashed123456+4+somedate", "123", "456");
+      const isValid = await tokenService.validate("salthashed123456+somedate", "123", "456");
       expect(isValid).toBe(true);
     });
 
     it("removes the token from the repo on a true validation", async () => {
       stubTokenRepo.tokenExists.mockResolvedValue(true);
 
-      mockedBcrypt.hash.mockImplementation(() => {
-        return Promise.resolve("salthashed123456");
+      mockedBcrypt.compare.mockImplementation(() => {
+        return Promise.resolve(true);
       });
 
-      await tokenService.validate("salthashed123456+4+somedate", "123", "456");
-      expect(stubTokenRepo.remove).toHaveBeenCalledWith("salthashed123456+4+somedate");
+      await tokenService.validate("salthashed123456+somedate", "123", "456");
+      expect(stubTokenRepo.remove).toHaveBeenCalledWith("salthashed123456+somedate");
     });
   });
 });
