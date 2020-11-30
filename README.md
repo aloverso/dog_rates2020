@@ -62,12 +62,14 @@ Start backend dev server:
 ./scripts/backend-start.sh
 ```
 
-Run all [jest](https://jestjs.io/) tests, and linting:
+The backend will run on port 8080 and the frontend will run on port 3000.
+
+Run all [jest](https://jestjs.io/) tests:
 ```shell script
 ./scripts/test-all.sh
 ```
 
-In addition to tests, this will run linting (via [eslint](https://eslint.org/)) and dependency 
+In addition to tests, this script will run linting (via [eslint](https://eslint.org/)) and dependency 
 boundary checks (via [good-fences](https://github.com/smikula/good-fences))
 
 Run [cypress](https://www.cypress.io/) feature tests:

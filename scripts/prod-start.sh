@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npm --prefix=backend start
+DB_ENV=dev npm --prefix=backend start
