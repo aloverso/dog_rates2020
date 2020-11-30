@@ -3,6 +3,8 @@
 This is a full-stack JavaScript app for a voting bracket on
  the best of the best dogs of 2020 from [@dog_rates](https://twitter.com/dog_rates).
 
+![app screenshot](dog_rates2020-app.png)
+
 ## Getting Started
 
 ### npm Dependencies
