@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/integers/?num=2&min=0&max=30&col=1&base=10&format=plain&rnd=new"
+  },
+  "response": {
+    "status": 200,
+    "body": "  1  \n   2 \n",
+    "headers": {
+      "Content-Type": "text/plain"
+    }
+  }
+}

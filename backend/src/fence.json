@@ -1,0 +1,15 @@
+{
+  "tags": ["backend"],
+  "dependencies": [
+    "knex",
+    "express",
+    "cors",
+    "supertest",
+    "axios",
+    "dayjs",
+    "body-parser",
+    "dayjs/plugin/utc",
+    "dayjs/plugin/customParseFormat",
+    "bcryptjs"
+  ]
+}
